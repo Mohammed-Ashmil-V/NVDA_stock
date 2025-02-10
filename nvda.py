@@ -23,7 +23,7 @@ if uploaded_file is not None:
     if 'Close' not in df.columns:
         st.error("Error: CSV file must contain a 'Close' column.")
     else:
-        df = df[['`Close`']]  # Keep only the 'Close' price column
+        df = df[['Close']]  # Keep only the 'Close' price column
 
         # Initialize and fit MinMaxScaler
         scaler = MinMaxScaler(feature_range=(0, 1))
