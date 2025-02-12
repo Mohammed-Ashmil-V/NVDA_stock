@@ -30,14 +30,14 @@ if uploaded_file is not None:
         df_scaled = scaler.fit_transform(df)
 
         # Ensure we have at least 50 data points
-        if len(df_scaled) < 50:
-            st.error("Error: The dataset must have at least 50 closing prices.")
+        if len(df_scaled) < 70:
+            st.error("Error: The dataset must have at least 70 closing prices.")
         else:
             # Prepare last 50 days of data for prediction
-            data_50 = df_scaled[-50:].reshape(1, 50, 1)
+            data_70 = df_scaled[-70:].reshape(1, 70, 1)
 
             # Predict stock price
-            prediction = loaded_model.predict(data_50)
+            prediction = loaded_model.predict(data_70)
 
             # Convert prediction back to original scale
             prediction_actual = scaler.inverse_transform(prediction)
@@ -57,7 +57,7 @@ if uploaded_file is not None:
         data_scaled = scaler.transform(data)
 
         # Function to create sequences (sliding window)
-        def create_sequences(data, time_steps=50):
+        def create_sequences(data, time_steps=70):
             X, y = [], []
             for i in range(len(data) - time_steps):
                 X.append(data[i:i + time_steps])
@@ -65,7 +65,7 @@ if uploaded_file is not None:
             return np.array(X), np.array(y)
 
         # Create sequences for LSTM
-        time_steps = 50
+        time_steps = 70
         X, y = create_sequences(data_scaled, time_steps)
 
         # Split data into training and testing sets (80% train, 20% test)
